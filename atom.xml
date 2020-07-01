@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.慌.com/"/>
-  <updated>2020-04-25T15:24:15.550Z</updated>
+  <updated>2020-07-01T02:48:01.963Z</updated>
   <id>http://www.慌.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Android启动模式及Flag</title>
+    <link href="http://www.慌.com/2020/07/01/Android%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F%E5%8F%8AFlag/"/>
+    <id>http://www.慌.com/2020/07/01/Android%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F%E5%8F%8AFlag/</id>
+    <published>2020-07-01T02:47:23.000Z</published>
+    <updated>2020-07-01T02:48:01.963Z</updated>
+    
+    <content type="html"><![CDATA[<p>Android启动模式及Flag</p><p>四种启动模式</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Android启动模式及Flag&lt;/p&gt;
+&lt;p&gt;四种启动模式&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Dart Event loop</title>
@@ -50,37 +74,6 @@
     <summary type="html">
     
       &lt;p&gt;&lt;a href=&quot;https://developers.google.com/tech-writing&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google Technical Writing Course&lt;/a&gt; 从用词、句子、段落等方面提高读者的技术文档写作能力。&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>明天开始</title>
-    <link href="http://www.慌.com/2020/04/19/%E6%98%8E%E5%A4%A9%E5%BC%80%E5%A7%8B/"/>
-    <id>http://www.慌.com/2020/04/19/%E6%98%8E%E5%A4%A9%E5%BC%80%E5%A7%8B/</id>
-    <published>2020-04-19T14:38:54.000Z</published>
-    <updated>2020-04-19T14:40:02.883Z</updated>
-    
-    <content type="html"><![CDATA[<p>明天</p><p>开始</p><p>写博客</p><p>其实就是做笔记</p><p>但是做笔记</p><p>思考不够</p><p>写想法吧</p><p>又没啥想法</p><p>写说明更恰当一些</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;明天&lt;/p&gt;
-&lt;p&gt;开始&lt;/p&gt;
-&lt;p&gt;写博客&lt;/p&gt;
-&lt;p&gt;其实就是做笔记&lt;/p&gt;
-&lt;p&gt;但是做笔记&lt;/p&gt;
-&lt;p&gt;思考不够&lt;/p&gt;
-&lt;p&gt;写想法吧&lt;/p&gt;
-&lt;p&gt;又没啥想法&lt;/p&gt;
-&lt;p&gt;写说明更恰当一些&lt;/p&gt;
-
-      
     
     </summary>
     
