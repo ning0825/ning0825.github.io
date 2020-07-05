@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.慌.com/"/>
-  <updated>2020-07-04T09:06:54.585Z</updated>
+  <updated>2020-07-04T13:22:28.746Z</updated>
   <id>http://www.慌.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Provider</title>
+    <link href="http://www.慌.com/2020/07/04/Provider/"/>
+    <id>http://www.慌.com/2020/07/04/Provider/</id>
+    <published>2020-07-04T09:28:53.000Z</published>
+    <updated>2020-07-04T13:22:28.746Z</updated>
+    
+    <content type="html"><![CDATA[<p>Provider是对InheritedWidget的封装，简化了操作。</p><a id="more"></a><p>使用Provider时，无需手写InheritedWidget及包裹InheritedWidget的StatefulWidget，只需用<code>Provider</code>包裹，并在构造函数中传递数据既可。</p><p>数据模型需继承<code>ChangeNotifier</code>；</p><p>显示数据的Widget中，通过<code>Consumer</code>的<code>builder</code>获取数据或者<code>context.watch&lt;T&gt;()</code>；</p><p>修改数据的Widget中，使用<code>Provider.of(context, listen: false)</code>或者<code>context.read&lt;T&gt;()</code>获取数据对象并调用修改接口。</p><p>如下：</p><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:provider/provider.dart'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterModel</span> <span class="keyword">extends</span> <span class="title">ChangeNotifier</span> </span>&#123;</span><br><span class="line">  <span class="built_in">int</span> n = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  add() &#123;</span><br><span class="line">    n++;</span><br><span class="line">    notifyListeners();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main() =&gt; runApp(</span><br><span class="line">      ChangeNotifierProvider(</span><br><span class="line">        create: (_) =&gt; CounterModel(),</span><br><span class="line">        child: MaterialApp(home: CounterPage()),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterPage</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(<span class="string">'provider'</span>),</span><br><span class="line">      ),</span><br><span class="line">      body: Column(</span><br><span class="line">        children: &lt;Widget&gt;[</span><br><span class="line">          ShowWidget(),</span><br><span class="line">          CtrlWidget(),</span><br><span class="line">        ],</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShowWidget</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Container(</span><br><span class="line">      <span class="comment">// child: Text(context.watch&lt;CounterModel&gt;().n.toString()),</span></span><br><span class="line">      child: Consumer&lt;CounterModel&gt;(</span><br><span class="line">        builder: (context, value, child) &#123;</span><br><span class="line">          <span class="keyword">return</span> Text(<span class="string">'<span class="subst">$&#123;value.n&#125;</span>'</span>);</span><br><span class="line">        &#125;,</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CtrlWidget</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Container(</span><br><span class="line">      child: RaisedButton(</span><br><span class="line">        onPressed: () =&gt; context.read&lt;CounterModel&gt;().add(),</span><br><span class="line">        <span class="comment">// onPressed: () =&gt;</span></span><br><span class="line">        <span class="comment">//     Provider.of&lt;CounterModel&gt;(context, listen: false).add(),</span></span><br><span class="line">        child: Text(<span class="string">'add'</span>),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>可以看到，我们甚至连StatefulWidget都不需要再写，代码量明显减少。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Provider是对InheritedWidget的封装，简化了操作。&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="state management" scheme="http://www.xn--9hu.com/tags/state-management/"/>
+    
+  </entry>
   
   <entry>
     <title>InheritedWidget</title>
@@ -34,29 +55,6 @@
     
     
       <category term="state management" scheme="http://www.xn--9hu.com/tags/state-management/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Global-vs-Constans</title>
-    <link href="http://www.慌.com/2020/07/01/Global-vs-Constans/"/>
-    <id>http://www.慌.com/2020/07/01/Global-vs-Constans/</id>
-    <published>2020-07-01T12:52:14.000Z</published>
-    <updated>2020-07-01T12:53:26.765Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="/2020/07/01/Global-vs-Constans/singletop.png" alt></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&lt;img src=&quot;/2020/07/01/Global-vs-Constans/singletop.png&quot; alt&gt;&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-    
     
   </entry>
   
