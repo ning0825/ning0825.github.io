@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"www.xn--9hu.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Android有四种启动模式，分别是”standard”, “singleTop”, “singleTask”和“singleInstance”，跟Intent中的 Flag_ACTIVITY_* 一起定义Activity启动时的不同行为。">
+  <meta name="description" content="正则表达式学习笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android启动模式及Flag">
-<meta property="og:url" content="http://www.慌.com/2020/07/01/Android%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F%E5%8F%8AFlag/index.html">
+<meta property="og:title" content="正则表达式">
+<meta property="og:url" content="http://www.慌.com/2020/07/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
 <meta property="og:site_name" content="慌">
-<meta property="og:description" content="Android有四种启动模式，分别是”standard”, “singleTop”, “singleTask”和“singleInstance”，跟Intent中的 Flag_ACTIVITY_* 一起定义Activity启动时的不同行为。">
+<meta property="og:description" content="正则表达式学习笔记">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-07-01T02:47:23.000Z">
-<meta property="article:modified_time" content="2020-07-15T03:41:27.956Z">
+<meta property="article:published_time" content="2020-07-09T10:43:45.000Z">
+<meta property="article:modified_time" content="2020-07-15T06:14:30.752Z">
 <meta property="article:author" content="Paix Chen">
-<meta property="article:tag" content="primary">
+<meta property="article:tag" content="regex">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://www.慌.com/2020/07/01/Android%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F%E5%8F%8AFlag/">
+<link rel="canonical" href="http://www.慌.com/2020/07/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>Android启动模式及Flag | 慌</title>
+  <title>正则表达式 | 慌</title>
   
 
 
@@ -162,7 +162,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.慌.com/2020/07/01/Android%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F%E5%8F%8AFlag/">
+    <link itemprop="mainEntityOfPage" href="http://www.慌.com/2020/07/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -175,7 +175,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Android启动模式及Flag
+          正则表达式
         </h1>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-07-01 10:47:23" itemprop="dateCreated datePublished" datetime="2020-07-01T10:47:23+08:00">2020-07-01</time>
+              <time title="Created: 2020-07-09 18:43:45" itemprop="dateCreated datePublished" datetime="2020-07-09T18:43:45+08:00">2020-07-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-15 11:41:27" itemprop="dateModified" datetime="2020-07-15T11:41:27+08:00">2020-07-15</time>
+                <time title="Modified: 2020-07-15 14:14:30" itemprop="dateModified" datetime="2020-07-15T14:14:30+08:00">2020-07-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -200,7 +200,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
+                  <a href="/categories/programming/" itemprop="url" rel="index"><span itemprop="name">programming</span></a>
                 </span>
             </span>
 
@@ -215,22 +215,47 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Android有四种启动模式，分别是”standard”, “singleTop”, “singleTask”和“singleInstance”，跟Intent中的 <code>Flag_ACTIVITY_*</code> 一起定义Activity启动时的不同行为。</p>
+        <p>正则表达式学习笔记</p>
 <a id="more"></a>
 
-<h2 id="四种启动模式"><a href="#四种启动模式" class="headerlink" title="四种启动模式"></a>四种启动模式</h2><h3 id="standard"><a href="#standard" class="headerlink" title="standard"></a>standard</h3><p>Activity的默认启动模式，每次通过 <code>startActivity</code> 启动时都创建一个新实例。</p>
-<h3 id="singleTop"><a href="#singleTop" class="headerlink" title="singleTop"></a>singleTop</h3><p>栈顶复用模式，如果Activity已处于栈顶，则复用，并调用Activity的<code>onNewIntent()</code>，否则创建新实例。</p>
-<h3 id="singleTask"><a href="#singleTask" class="headerlink" title="singleTask"></a>singleTask</h3><p>启动Activity时，创建一个新栈，并创建的Activity实例放进去。如果在某个栈中已存在此Activity，则将其上面的Activity出栈，复用此Activity，并调用<code>onNewIntent()</code>。</p>
-<h3 id="singleInstance"><a href="#singleInstance" class="headerlink" title="singleInstance"></a>singleInstance</h3><p>启动Activity是创建一个新栈，并创建的Activity实例放进去。跟singleTask不同的是，这个栈内只能有一个Activity，也就是说这个Activity启动Activity时，不会在其栈顶启动，而是启动在其他栈。</p>
-<h2 id="Intent-Flags"><a href="#Intent-Flags" class="headerlink" title="Intent Flags"></a>Intent Flags</h2><p>Intent 中跟Activity启动相关的flag常用的有三个，<code>FLAG_ACTIVITY_NEW_TASK</code>，<code>FLAG_ACTIVITY_SINGLE_TOP</code>，<code>FLAG_ACTIVITY_CLEAR_TOP</code>。</p>
-<h3 id="FLAG-ACTIVITY-NEW-TASK"><a href="#FLAG-ACTIVITY-NEW-TASK" class="headerlink" title="FLAG_ACTIVITY_NEW_TASK"></a>FLAG_ACTIVITY_NEW_TASK</h3><p>作用同<code>singleTask</code>。</p>
-<h3 id="FLAG-ACTIVITY-SINGLE-TOP"><a href="#FLAG-ACTIVITY-SINGLE-TOP" class="headerlink" title="FLAG_ACTIVITY_SINGLE_TOP"></a>FLAG_ACTIVITY_SINGLE_TOP</h3><p>作用同 <code>singleTop</code>。</p>
-<h3 id="FLAG-ACTIVITY-CLEAR-TOP"><a href="#FLAG-ACTIVITY-CLEAR-TOP" class="headerlink" title="FLAG_ACTIVITY_CLEAR_TOP"></a>FLAG_ACTIVITY_CLEAR_TOP</h3><p>若当前栈已存在Activity实例，则将其上面的Activity出栈，并调用此Activity的<code>onNewIntent()</code>。</p>
-<h3 id="为什么-FLAG-ACTIVITY-CLEAR-TOP经常跟FLAG-ACTIVITY-NEW-TASK一起用"><a href="#为什么-FLAG-ACTIVITY-CLEAR-TOP经常跟FLAG-ACTIVITY-NEW-TASK一起用" class="headerlink" title="为什么 FLAG_ACTIVITY_CLEAR_TOP经常跟FLAG_ACTIVITY_NEW_TASK一起用"></a>为什么 <code>FLAG_ACTIVITY_CLEAR_TOP</code>经常跟<code>FLAG_ACTIVITY_NEW_TASK</code>一起用</h3><p>使用<code>FLAG_ACTIVITY_NEW_TASK</code>，如果启动应用本身的Activity，跟不使用是一样的；如果启动的是其他应用的Activity，则会跳转到其他应用，并实例化一个新Activity。</p>
-<p>例如，其他应用当前Activity状态时 A-&gt;B-&gt;C，以NEW_TASK启动B，结果是A-&gt;B-&gt;C-&gt;B</p>
-<p>使用<code>FLAG_ACTIVITY_CLEAR_TOP</code>，如果启动应用本身的Activity，行为如上面描述；如果启动的是其他应用的Activity，则会在本应用内实例化一个Activity，也就是这个flag判断的是应用内是否存在Activity实例。</p>
-<p>两个一起使用则可以实现跳转到目标应用，并将其上面的Activity出栈的效果。</p>
-<p><strong>使用Intent flags启动Activity时，flag会覆盖Activity的launchmode指定的启动模式</strong></p>
+<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><p><span style="color:red"><strong>+</strong></span> 表示前面的字符可以出现一次或多次。</p>
+<p>如：go+gle可以匹配gogle、goooooogle。</p>
+<p><span style="color:red"><strong>*</strong></span> 表示前面的字符可以出现零次，一次或多次。</p>
+<p>如：go*gle可以匹配ggle、gogle、goooogle。</p>
+<p><span style="color:red"><strong>?</strong></span> 表示前面的字符可以出现零次或一次。</p>
+<p>如：go?gle可以匹配ggle、gogle。</p>
+<p><span style="color:red">.</span> 匹配除换行符\n外的任意单字符。</p>
+<blockquote>
+<p> 在 + * 之后放置 ? ，可从贪婪模式变为非贪婪模式。</p>
+</blockquote>
+<p>^ 匹配字符串的起始位置，除非在方括号中使用，表示不接受该方括号表达式内的字符集合。</p>
+<p>$ 匹配字符串的结束位置，如果设置了Multiline属性，则也匹配\n或\r。</p>
+<hr>
+<h3 id="非打印字符（空白字符）"><a href="#非打印字符（空白字符）" class="headerlink" title="非打印字符（空白字符）"></a>非打印字符（空白字符）</h3><p><span style="color:green">\cx</span> 匹配由x指明的控制字符，如<code>\cM</code>匹配一个control+M或回车符。x必须是A-Z或a-z之一。</p>
+<p>\f匹配一个换页符。</p>
+<p>\n匹配一个换行符，如<code>^\n</code>可匹配所有空行。</p>
+<p>\r匹配一个回车符。</p>
+<p>\s匹配一个空白字符，如空格，制表符，换页符等等，等价于<code>[\f\n\r\t\v]</code>。</p>
+<p>\S匹配一个非空白字符，等价于<code>\[^\f\n\r\t\v\]</code>。</p>
+<p>\t匹配制表符。</p>
+<p>\v匹配垂直制表符。</p>
+<hr>
+<h3 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h3><p>限定符表示给定组件必须出现多少次才能匹配，有 +，*，?，{n}，{n,}，{n, m}六种。</p>
+<p>{n} n是一个非负整数，匹配确定的n次。</p>
+<p>{n,} n是一个非负整数，匹配至少n次。</p>
+<p>{n,m} n,m均为非负整数，n&lt;=m，匹配最少n次，最多m次。</p>
+<hr>
+<h3 id="定位符"><a href="#定位符" class="headerlink" title="定位符"></a>定位符</h3><p>^ $ \b \B</p>
+<p>\b 匹配一个单词边界，即字母和空格之间的位置。</p>
+<p>\B 非单词边界匹配。</p>
+<p><strong>限定符和定位符不能一起使用。</strong></p>
+<p><strong>(pattern)</strong> 匹配pattern并获取这一匹配，所获取的匹配可以从产生的matches集合中得到。</p>
+<p><strong>(?:pattern)</strong> 匹配pattern但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用“或”（|）来组合一个模式的各个部分是很有用，例如，<code>industrial(?:y|lies)</code>就是一个比<code>industry|industries</code>更简略的表达式。</p>
+<p><strong>(?=pattern)</strong>正向肯定预查，在任何匹配pattern的字符串开始处开始匹配查找字符串。这是一个非获取匹配。</p>
+<p>例如：<code>Windows(?=95|98|NT|2000)</code>能匹配”Windows2000”中的“Windows”，但不能匹配“Windows3.1”中的“Windows”。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始。</p>
+<p>*<em>(?!pattern) *</em>正向否定预查，在任何不匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配。例如<code>Windows (?!95|98|NT|2000)</code>可以匹配“Windows3.1”中的Windows，但不能匹配“Windows2000”中的“Windows”。预查不消耗字符。</p>
+<p><strong>(?&lt;=pattern)</strong> 反向肯定预查，与正向肯定预查类似，只是方向相反。例如<code>(?&lt;=95|98|NT|2000)Windows</code>能匹配“2000Windows”中的“Windows”，但不能匹配“3.1Windows”中的“Windows”。</p>
+<p><strong>(?&lt;!pattern)</strong> 反向否定预查，与正向否定预查类似，只是方向相反。例如<code>(?&lt;!95|98|NT|2000)Windows</code>能匹配“3.1Windows”中的“Windows”，但不能匹配“2000Windows”中的“Windows”。 </p>
 
     </div>
 
@@ -240,7 +265,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/primary/" rel="tag"># primary</a>
+              <a href="/tags/regex/" rel="tag"># regex</a>
           </div>
 
         
@@ -249,12 +274,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/04/20/Google%20Technical%20Writing%20Course/" rel="prev" title="Google Technical Writing Course 笔记">
-      <i class="fa fa-chevron-left"></i> Google Technical Writing Course 笔记
+    <a href="/2020/07/08/Matrix-Transform/" rel="prev" title="Matrix & Transform">
+      <i class="fa fa-chevron-left"></i> Matrix & Transform
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/07/02/InheritedWidget/" rel="next" title="InheritedWidget">
-      InheritedWidget <i class="fa fa-chevron-right"></i>
+    <a href="/2020/07/12/service%E4%BF%9D%E6%B4%BB/" rel="next" title="service保活">
+      service保活 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -314,7 +339,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#四种启动模式"><span class="nav-number">1.</span> <span class="nav-text">四种启动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#standard"><span class="nav-number">1.1.</span> <span class="nav-text">standard</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#singleTop"><span class="nav-number">1.2.</span> <span class="nav-text">singleTop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#singleTask"><span class="nav-number">1.3.</span> <span class="nav-text">singleTask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#singleInstance"><span class="nav-number">1.4.</span> <span class="nav-text">singleInstance</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Intent-Flags"><span class="nav-number">2.</span> <span class="nav-text">Intent Flags</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FLAG-ACTIVITY-NEW-TASK"><span class="nav-number">2.1.</span> <span class="nav-text">FLAG_ACTIVITY_NEW_TASK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FLAG-ACTIVITY-SINGLE-TOP"><span class="nav-number">2.2.</span> <span class="nav-text">FLAG_ACTIVITY_SINGLE_TOP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FLAG-ACTIVITY-CLEAR-TOP"><span class="nav-number">2.3.</span> <span class="nav-text">FLAG_ACTIVITY_CLEAR_TOP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么-FLAG-ACTIVITY-CLEAR-TOP经常跟FLAG-ACTIVITY-NEW-TASK一起用"><span class="nav-number">2.4.</span> <span class="nav-text">为什么 FLAG_ACTIVITY_CLEAR_TOP经常跟FLAG_ACTIVITY_NEW_TASK一起用</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊字符"><span class="nav-number">1.</span> <span class="nav-text">特殊字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非打印字符（空白字符）"><span class="nav-number">2.</span> <span class="nav-text">非打印字符（空白字符）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#限定符"><span class="nav-number">3.</span> <span class="nav-text">限定符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定位符"><span class="nav-number">4.</span> <span class="nav-text">定位符</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

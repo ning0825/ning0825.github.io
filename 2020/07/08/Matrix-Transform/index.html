@@ -20,15 +20,26 @@
     var CONFIG = {"hostname":"www.xn--9hu.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="矩阵概念及在Flutter中的使用。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Matrix &amp; Transform">
 <meta property="og:url" content="http://www.慌.com/2020/07/08/Matrix-Transform/index.html">
 <meta property="og:site_name" content="慌">
+<meta property="og:description" content="矩阵概念及在Flutter中的使用。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.慌.com/2020/07/08/Matrix-Transform/definition.svg">
+<meta property="og:image" content="http://www.慌.com/2020/07/08/Matrix-Transform/add.svg">
+<meta property="og:image" content="http://www.慌.com/2020/07/08/Matrix-Transform/subtract.svg">
+<meta property="og:image" content="http://www.慌.com/2020/07/08/Matrix-Transform/num_multi.svg">
+<meta property="og:image" content="http://www.慌.com/2020/07/08/Matrix-Transform/multi_comp.svg">
+<meta property="og:image" content="http://www.慌.com/2020/07/08/Matrix-Transform/multi.svg">
+<meta property="og:image" content="http://www.慌.com/2020/07/08/Matrix-Transform/transform.png">
+<meta property="og:image" content="http://www.慌.com/2020/07/08/Matrix-Transform/anim.gif">
 <meta property="article:published_time" content="2020-07-08T00:44:37.000Z">
-<meta property="article:modified_time" content="2020-07-08T00:44:37.754Z">
+<meta property="article:modified_time" content="2020-07-15T12:02:37.778Z">
 <meta property="article:author" content="Paix Chen">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.慌.com/2020/07/08/Matrix-Transform/definition.svg">
 
 <link rel="canonical" href="http://www.慌.com/2020/07/08/Matrix-Transform/">
 
@@ -184,6 +195,22 @@
 
               <time title="Created: 2020-07-08 08:44:37" itemprop="dateCreated datePublished" datetime="2020-07-08T08:44:37+08:00">2020-07-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-07-15 20:02:37" itemprop="dateModified" datetime="2020-07-15T20:02:37+08:00">2020-07-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/flutter/" itemprop="url" rel="index"><span itemprop="name">flutter</span></a>
+                </span>
+            </span>
 
           
 
@@ -196,7 +223,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>矩阵概念及在Flutter中的使用。</p>
+<a id="more"></a>
+
+<h2 id="矩阵定义"><a href="#矩阵定义" class="headerlink" title="矩阵定义"></a>矩阵定义</h2><p>由m * n 个数 a<sub>ij</sub>排成的m行n列的数表成为m行n列的矩阵，简称m*n矩阵，记作：</p>
+<p><img src="/2020/07/08/Matrix-Transform/definition.svg" alt></p>
+<p>m * n 矩阵A也记作A<sub>mn</sub>。</p>
+<h2 id="矩阵运算"><a href="#矩阵运算" class="headerlink" title="矩阵运算"></a>矩阵运算</h2><h4 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h4><p><img src="/2020/07/08/Matrix-Transform/add.svg" alt></p>
+<h4 id="减法"><a href="#减法" class="headerlink" title="减法"></a>减法</h4><p><img src="/2020/07/08/Matrix-Transform/subtract.svg" alt></p>
+<h4 id="数乘"><a href="#数乘" class="headerlink" title="数乘"></a>数乘</h4><p><img src="/2020/07/08/Matrix-Transform/num_multi.svg" alt></p>
+<h4 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h4><p>矩阵乘法必须在第一个矩阵A的列数和第二个矩阵B的行数相等时才能用。</p>
+<p>如果A是m * n矩阵，B是n*p矩阵，相乘结果C是m * p 矩阵。</p>
+<p><img src="/2020/07/08/Matrix-Transform/multi_comp.svg" alt></p>
+<p><img src="/2020/07/08/Matrix-Transform/multi.svg" alt></p>
+<h2 id="平移-旋转-缩放"><a href="#平移-旋转-缩放" class="headerlink" title="平移 旋转 缩放"></a>平移 旋转 缩放</h2><p><img src="/2020/07/08/Matrix-Transform/transform.png" alt></p>
+<h2 id="在Flutter中使用矩阵"><a href="#在Flutter中使用矩阵" class="headerlink" title="在Flutter中使用矩阵"></a>在Flutter中使用矩阵</h2><p>Flutter提供了<code>Transform</code> 部件，它接收一个名为transform的Matrix参数</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'dart:math'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'package:vector_math/vector_math_64.dart'</span> <span class="keyword">hide</span> Colors;</span><br><span class="line"></span><br><span class="line">main(<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; args) &#123;</span><br><span class="line">  runApp(MyPage());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPage</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  _MyPageState createState() =&gt; _MyPageState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_MyPageState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">MyPage</span>&gt; </span>&#123;</span><br><span class="line">  <span class="built_in">double</span> rotX = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">double</span> rotY = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">double</span> rotZ = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  Matrix4 _getTransform() &#123;</span><br><span class="line">    <span class="keyword">return</span> Matrix4.identity()</span><br><span class="line">      ..setEntry(<span class="number">3</span>, <span class="number">2</span>, <span class="number">0.001</span>)</span><br><span class="line">      ..rotateX(rotX)</span><br><span class="line">      ..rotateY(rotY);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span> _setRot(DragUpdateDetails details) &#123;</span><br><span class="line">    rotX = -(<span class="number">150</span> - details.localPosition.dy) / <span class="number">150</span> * pi / <span class="number">6</span>;</span><br><span class="line">    rotY = (<span class="number">150</span> - details.localPosition.dx) / <span class="number">150</span> * pi / <span class="number">6</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> MaterialApp(</span><br><span class="line">      home: Scaffold(</span><br><span class="line">        body: Center(</span><br><span class="line">          child: GestureDetector(</span><br><span class="line">            onPanUpdate: (details) &#123;</span><br><span class="line">              setState(() =&gt; _setRot(details));</span><br><span class="line">            &#125;,</span><br><span class="line">            child: Transform(</span><br><span class="line">              transform: _getTransform(),</span><br><span class="line">              child: Container(</span><br><span class="line">                width: <span class="number">300</span>,</span><br><span class="line">                height: <span class="number">300</span>,</span><br><span class="line">                color: Colors.greenAccent,</span><br><span class="line">                child: FlutterLogo(),</span><br><span class="line">              ),</span><br><span class="line">              alignment: Alignment.center,</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/07/08/Matrix-Transform/anim.gif" alt></p>
+
     </div>
 
     
@@ -214,7 +259,10 @@
     <a href="/2020/07/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%85%AD%E5%A4%A7%E5%8E%9F%E5%88%99/" rel="prev" title="设计模式六大原则">
       <i class="fa fa-chevron-left"></i> 设计模式六大原则
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="next" title="正则表达式">
+      正则表达式 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -273,6 +321,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵定义"><span class="nav-number">1.</span> <span class="nav-text">矩阵定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵运算"><span class="nav-number">2.</span> <span class="nav-text">矩阵运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#加法"><span class="nav-number">2.0.1.</span> <span class="nav-text">加法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#减法"><span class="nav-number">2.0.2.</span> <span class="nav-text">减法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数乘"><span class="nav-number">2.0.3.</span> <span class="nav-text">数乘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乘法"><span class="nav-number">2.0.4.</span> <span class="nav-text">乘法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平移-旋转-缩放"><span class="nav-number">3.</span> <span class="nav-text">平移 旋转 缩放</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在Flutter中使用矩阵"><span class="nav-number">4.</span> <span class="nav-text">在Flutter中使用矩阵</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -286,7 +335,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -299,7 +348,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
