@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xn--9hu.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="BLoC 模式分离了UI层和业务逻辑层，提供的event和state概念使代码逻辑逻辑更加清晰，易于维护，并提供了Observer等功能，方便调试。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BloC">
+<meta property="og:url" content="http://www.慌.com/2020/07/05/BloC/index.html">
+<meta property="og:site_name" content="慌">
+<meta property="og:description" content="BLoC 模式分离了UI层和业务逻辑层，提供的event和state概念使代码逻辑逻辑更加清晰，易于维护，并提供了Observer等功能，方便调试。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.慌.com/2020/07/05/BloC/bloc_structure.png">
+<meta property="article:published_time" content="2020-07-05T14:14:54.000Z">
+<meta property="article:modified_time" content="2020-07-06T12:23:16.541Z">
+<meta property="article:author" content="Paix Chen">
+<meta property="article:tag" content="state management">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.慌.com/2020/07/05/BloC/bloc_structure.png">
+
+<link rel="canonical" href="http://www.慌.com/2020/07/05/BloC/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>BloC | 慌</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="慌" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">慌</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.慌.com/2020/07/05/BloC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Paix Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="慌">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BloC
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-05 22:14:54" itemprop="dateCreated datePublished" datetime="2020-07-05T22:14:54+08:00">2020-07-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-07-06 20:23:16" itemprop="dateModified" datetime="2020-07-06T20:23:16+08:00">2020-07-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/flutter/" itemprop="url" rel="index"><span itemprop="name">flutter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>BLoC 模式分离了UI层和业务逻辑层，提供的event和state概念使代码逻辑逻辑更加清晰，易于维护，并提供了Observer等功能，方便调试。</p>
+<a id="more"></a>
+
+<h2 id="什么是BLoC"><a href="#什么是BLoC" class="headerlink" title="什么是BLoC"></a>什么是BLoC</h2><p>BLoC，全称Business Logic Component，业务逻辑部件，顾名思义，BLoC就是容纳业务逻辑的地方，并提供方法供UI层的Widget的访问，实现数据共享。</p>
+<p>BLoC的结构如下图所示：</p>
+<p><img src="/2020/07/05/BloC/bloc_structure.png" alt></p>
+<p>BLoC本质上是一个stream，入口是event，通常是用户发起的“请求”，而输出的states就是BLoC根据内部的“Logic”，将用户请求转换为数据返回给UI层。</p>
+<p>比如在官方的Counter Demo中，用户只要点击按钮，数字就加一，那么就可以定义一个叫<code>increment</code>的event，BLoC接收到这个event后，将之前的state加一并返回，这个stream的listener就会收到新state并刷新。</p>
+<h2 id="为什么使用BLoC"><a href="#为什么使用BLoC" class="headerlink" title="为什么使用BLoC"></a>为什么使用BLoC</h2><p>BLoC模式有以下优点：</p>
+<ul>
+<li><p>使用简单</p>
+<p>event -&gt; BLoC -&gt; state，逻辑简单，易于理解。同时Flutter Package中的bloc包和flutter_bloc包对BLoC模式进行了很好的封装，使用也很简单。</p>
+</li>
+<li><p>功能强大</p>
+<p>比如BlocObserver可以onTransition回调中获取currentState和nextState，还有onEvent中获取添加到Bloc中的事件，在onError中捕获异常等，方便调试。</p>
+</li>
+<li><p>可测试</p>
+<p>方便的添加event和获取state接口都使测试更容易。</p>
+</li>
+</ul>
+<h2 id="如何使用BLoC"><a href="#如何使用BLoC" class="headerlink" title="如何使用BLoC"></a>如何使用BLoC</h2><p>下面实现一个常见的用户登录/注销功能。</p>
+<ol>
+<li>首先创建用户信息类</li>
+</ol>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserInfo</span> </span>&#123;</span><br><span class="line">  UserInfo(&#123;<span class="keyword">this</span>.name, <span class="keyword">this</span>.age&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">String</span> name;</span><br><span class="line">  <span class="built_in">int</span> age;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="built_in">String</span> toString() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'name: <span class="subst">$name</span>, age: <span class="subst">$age</span>'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>创建Event类</li>
+</ol>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserInfoEvent</span> </span>&#123;</span><br><span class="line">  UserInfoEvent(<span class="keyword">this</span>.eventId, &#123;<span class="keyword">this</span>.userInfo&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">const</span> login = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">const</span> logOut = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">int</span> eventId;</span><br><span class="line"></span><br><span class="line">  UserInfo userInfo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    这个类中主要是<code>login</code>和<code>logOut</code>两个变量，分别代表不同的事件。在登录时还需要传递用户信息过去，所以还需要在构造器中放一个<code>UserInfo</code>对象。</p>
+<ol start="3">
+<li>创建Bloc类</li>
+</ol>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserInfoBloc</span> <span class="keyword">extends</span> <span class="title">Bloc</span>&lt;<span class="title">UserInfoEvent</span>, <span class="title">UserInfo</span>&gt; </span>&#123;</span><br><span class="line">  UserInfoBloc() : <span class="keyword">super</span>(UserInfo());</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Stream&lt;UserInfo&gt; mapEventToState(UserInfoEvent event) <span class="keyword">async</span>* &#123;</span><br><span class="line">    <span class="keyword">switch</span> (event.eventId) &#123;</span><br><span class="line">      <span class="keyword">case</span> UserInfoEvent.login:</span><br><span class="line">        <span class="keyword">yield</span> event.userInfo;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> UserInfoEvent.logOut:</span><br><span class="line">        <span class="keyword">yield</span> UserInfo();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>构造器中给bloc一个初始值，以便在用户未触发event时，widget知道显示什么信息；</p>
+</li>
+<li><p>最重要的是第二个方法 <code>mapEventToState</code>，这里就可以看出bloc就是stream。</p>
+<p>mapEventToState中，根据不同的event，返回不同的对象，也就是需要在UI层显示的内容。</p>
+</li>
+</ul>
+<ol start="4">
+<li>创建main入口</li>
+</ol>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">main() &#123;</span><br><span class="line">  runApp(</span><br><span class="line">    BlocProvider&lt;UserInfoBloc&gt;(</span><br><span class="line">      create: (context) =&gt; UserInfoBloc(),</span><br><span class="line">      child: MaterialApp(</span><br><span class="line">        home: LoginRoute(),</span><br><span class="line">      ),</span><br><span class="line">    ),</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    这里跟InheritedWidget一样，都是“lifting state up”，将state移在上面，下面的widget通过接口获取state，state在这里指UserInfoBloc。</p>
+<ol start="5">
+<li>创建登录界面</li>
+</ol>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LoginRoute</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  _LoginRouteState createState() =&gt; _LoginRouteState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_LoginRouteState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">LoginRoute</span>&gt; </span>&#123;</span><br><span class="line">  <span class="built_in">String</span> name;</span><br><span class="line">  <span class="built_in">int</span> age;</span><br><span class="line"></span><br><span class="line">  GlobalKey key = GlobalKey();</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      body: SafeArea(</span><br><span class="line">        child: Center(</span><br><span class="line">          child: Form(</span><br><span class="line">            key: key,</span><br><span class="line">            child: Column(</span><br><span class="line">              children: &lt;Widget&gt;[</span><br><span class="line">                TextFormField(</span><br><span class="line">                  decoration: <span class="keyword">const</span> InputDecoration(labelText: <span class="string">'name'</span>),</span><br><span class="line">                  onSaved: (newValue) =&gt; name = newValue,</span><br><span class="line">                ),</span><br><span class="line">                TextFormField(</span><br><span class="line">                  decoration: <span class="keyword">const</span> InputDecoration(labelText: <span class="string">'age'</span>),</span><br><span class="line">                  onSaved: (newValue) =&gt; age = <span class="built_in">int</span>.parse(newValue),</span><br><span class="line">                )</span><br><span class="line">              ],</span><br><span class="line">            ),</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        onPressed: () &#123;</span><br><span class="line">          (key.currentState <span class="keyword">as</span> FormState).save();</span><br><span class="line">          context.bloc&lt;UserInfoBloc&gt;().add(UserInfoEvent(UserInfoEvent.login,</span><br><span class="line">              userInfo: UserInfo(name: name, age: age)));</span><br><span class="line">          Navigator.of(context).push(MaterialPageRoute(</span><br><span class="line">            builder: (context) =&gt; UserCenterRoute(),</span><br><span class="line">          ));</span><br><span class="line">        &#125;,</span><br><span class="line">        child: Icon(Icons.done),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    登录界面中，context.bloc的add方法，将一个事件添加到UserInfoBloc的stream流中。</p>
+<ol start="6">
+<li>创建个人信息页面</li>
+</ol>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserCenterRoute</span> <span class="keyword">extends</span> <span class="title">StatelessWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      body: SafeArea(</span><br><span class="line">        child: Container(</span><br><span class="line">          child: BlocBuilder&lt;UserInfoBloc, UserInfo&gt;(</span><br><span class="line">            builder: (context, state) &#123;</span><br><span class="line">              <span class="keyword">return</span> state.name != <span class="keyword">null</span> &amp;&amp; state.age != <span class="keyword">null</span></span><br><span class="line">                  ? Column(</span><br><span class="line">                      children: &lt;Widget&gt;[</span><br><span class="line">                        Text(</span><br><span class="line">                          <span class="string">'name: <span class="subst">$&#123;state.name&#125;</span>'</span>,</span><br><span class="line">                          style: <span class="keyword">const</span> TextStyle(fontSize: <span class="number">26</span>),</span><br><span class="line">                        ),</span><br><span class="line">                        Text(</span><br><span class="line">                          <span class="string">'age: <span class="subst">$&#123;state.age&#125;</span>'</span>,</span><br><span class="line">                          style: <span class="keyword">const</span> TextStyle(fontSize: <span class="number">26</span>),</span><br><span class="line">                        ),</span><br><span class="line">                      ],</span><br><span class="line">                    )</span><br><span class="line">                  : Text(<span class="string">'no user info avaliable'</span>);</span><br><span class="line">            &#125;,</span><br><span class="line">          ),</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        onPressed: () =&gt; context</span><br><span class="line">            .bloc&lt;UserInfoBloc&gt;()</span><br><span class="line">            .add(UserInfoEvent(UserInfoEvent.logOut)),</span><br><span class="line">        child: Icon(Icons.exit_to_app),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>BlocBuilder监听UserInfoBloc中stream的流，获取其中的信息显示在UI界面上。</p>
+<h2 id="更多功能"><a href="#更多功能" class="headerlink" title="更多功能"></a>更多功能</h2><h3 id="BlocObserver"><a href="#BlocObserver" class="headerlink" title="BlocObserver"></a>BlocObserver</h3><p>BlocObserver提供了onEvent，onTransition，onError等回调，方便开发者看到stream的“流动”。</p>
+<p>使用也很方便，只需继承BlocObserver，重写某个或所有方法。然后在main方法中给bloc.observer赋值即可。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SimpleBlocObserver</span> <span class="keyword">extends</span> <span class="title">BlocObserver</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="keyword">void</span> onEvent(Bloc bloc, <span class="built_in">Object</span> event) &#123;</span><br><span class="line">    <span class="built_in">print</span>(event);</span><br><span class="line">    <span class="keyword">super</span>.onEvent(bloc, event);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="keyword">void</span> onTransition(Bloc bloc, Transition transition) &#123;</span><br><span class="line">    <span class="built_in">print</span>(transition);</span><br><span class="line">    <span class="keyword">super</span>.onTransition(bloc, transition);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="keyword">void</span> onError(Bloc bloc, <span class="built_in">Object</span> error, StackTrace stackTrace) &#123;</span><br><span class="line">    <span class="built_in">print</span>(error);</span><br><span class="line">    <span class="keyword">super</span>.onError(bloc, error, stackTrace);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main() &#123;</span><br><span class="line">  Bloc.observer = SimpleBlocObserver();</span><br><span class="line">  runApp(</span><br><span class="line">    ...</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="MultiBlocProvider"><a href="#MultiBlocProvider" class="headerlink" title="MultiBlocProvider"></a>MultiBlocProvider</h3><p>工程中通常会有很多个Bloc，MultiBlocProvider跟多层BlocProvider嵌套使用效果一样，但代码更加简洁，提高了代码可读性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">MultiBlocProvider(</span><br><span class="line">  providers: [</span><br><span class="line">    BlocProvider&lt;BlocA&gt;(</span><br><span class="line">      create: (BuildContext context) &#x3D;&gt; BlocA(),</span><br><span class="line">    ),</span><br><span class="line">    BlocProvider&lt;BlocB&gt;(</span><br><span class="line">      create: (BuildContext context) &#x3D;&gt; BlocB(),</span><br><span class="line">    ),</span><br><span class="line">    BlocProvider&lt;BlocC&gt;(</span><br><span class="line">      create: (BuildContext context) &#x3D;&gt; BlocC(),</span><br><span class="line">    ),</span><br><span class="line">  ],</span><br><span class="line">  child: ChildA(),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="BlocListener"><a href="#BlocListener" class="headerlink" title="BlocListener"></a>BlocListener</h3><p>BlocListener只在状态变化的时候被调用，不包括初始状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">BlocListener&lt;BlocA, BlocAState&gt;(</span><br><span class="line">  listener: (context, state) &#123;</span><br><span class="line">    &#x2F;&#x2F; do stuff here based on BlocA&#39;s state</span><br><span class="line">  &#125;,</span><br><span class="line">  child: Container(),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="BlocConsumer"><a href="#BlocConsumer" class="headerlink" title="BlocConsumer"></a>BlocConsumer</h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/state-management/" rel="tag"># state management</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/04/Provider/" rel="prev" title="Provider">
+      <i class="fa fa-chevron-left"></i> Provider
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%85%AD%E5%A4%A7%E5%8E%9F%E5%88%99/" rel="next" title="设计模式六大原则">
+      设计模式六大原则 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是BLoC"><span class="nav-number">1.</span> <span class="nav-text">什么是BLoC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用BLoC"><span class="nav-number">2.</span> <span class="nav-text">为什么使用BLoC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用BLoC"><span class="nav-number">3.</span> <span class="nav-text">如何使用BLoC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更多功能"><span class="nav-number">4.</span> <span class="nav-text">更多功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BlocObserver"><span class="nav-number">4.1.</span> <span class="nav-text">BlocObserver</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MultiBlocProvider"><span class="nav-number">4.2.</span> <span class="nav-text">MultiBlocProvider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BlocListener"><span class="nav-number">4.3.</span> <span class="nav-text">BlocListener</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BlocConsumer"><span class="nav-number">4.4.</span> <span class="nav-text">BlocConsumer</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Paix Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Paix Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
